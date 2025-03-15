@@ -1,0 +1,3 @@
+class Industrial < ApplicationRecord
+
+end
