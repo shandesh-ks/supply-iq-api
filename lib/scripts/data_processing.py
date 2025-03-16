@@ -36,7 +36,7 @@ def process_data(file_path, output_dir):
     plt.ylabel('Risk Index')
     plt.title('Risk Index Trends Over Time')
     plt.legend()
-    plt.savefig(trend_plot_path)
+    plt.savefig(trend_plot_path, bbox_inches='tight', dpi=300)
     plt.close()
 
     # **2. Generate Correlation Heatmap**
@@ -45,7 +45,7 @@ def process_data(file_path, output_dir):
     plt.figure(figsize=(10,6))
     sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
     plt.title("Feature Correlation Heatmap")
-    plt.savefig(heatmap_path)
+    plt.savefig(heatmap_path, bbox_inches='tight', dpi=300)
     plt.close()
 
     # **3. Train ML Model**
@@ -80,7 +80,7 @@ def process_data(file_path, output_dir):
     plt.xlabel("Feature Importance Score")
     plt.ylabel("Features")
     plt.title("Feature Importance for SCM Stability Prediction")
-    plt.savefig(feature_importance_path)
+    plt.savefig(feature_importance_path, bbox_inches='tight', dpi=300)
     plt.close()
 
     # **5. Return JSON Output**

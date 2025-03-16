@@ -10,4 +10,4 @@ default: &default
 development:
   primary:
     <<: *default
-    database: ai_indus
+    database: ecommerce_scraper
