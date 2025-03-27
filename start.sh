@@ -8,12 +8,12 @@ then
 fi
 
 # Set up Python virtual environment
-python3 -m venv myenv
-source myenv/bin/activate
+python3 -m venv $HOME/myenv
+source $HOME/myenv/bin/activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Ensure pip is installed inside the virtual environment
+$HOME/myenv/bin/pip install --upgrade pip
+$HOME/myenv/bin/pip install -r requirements.txt
 
 # Start the Rails server
 bundle exec rails server -b 0.0.0.0 -p $PORT
-
