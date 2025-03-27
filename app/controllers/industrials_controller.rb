@@ -41,7 +41,7 @@ class IndustrialsController < ApplicationController
     return unless base64_data.present?
 
     decoded_data = Base64.decode64(base64_data)
-    file_path = Rails.root.join('tmp', 'uploaded_file.xlsx')
+    file_path = "/tmp/uploaded_file.xlsx"  # Use `/tmp/` for production
 
     File.open(file_path, 'wb') { |file| file.write(decoded_data) }
     file_path
@@ -51,8 +51,8 @@ class IndustrialsController < ApplicationController
   end
 
   def run_python_script(file_path, output_dir)
-    script_path = Rails.root.join('lib', 'scripts', 'data_processing.py')
-    python_env = Rails.root.join('myenv', 'bin', 'python3')
+    script_path = Rails.root.join('lib', 'scripts', 'data_processing.py').to_s
+    python_env = "python3"  # Use system Python directly
 
     output, error, status = Open3.capture3("#{python_env} #{script_path} #{file_path} #{output_dir}")
 
