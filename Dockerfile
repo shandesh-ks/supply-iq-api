@@ -35,19 +35,17 @@ COPY . .
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile && \
     bundle exec rails db:migrate
 
-# Install Python dependencies
+# Install Python dependencies inside a virtual environment
 COPY requirements.txt /app/requirements.txt
-RUN pip3 install --no-cache-dir -r /app/requirements.txt
+RUN python3 -m venv /venv && \
+    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt
 
 # Final production image
 FROM base
 
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
-
-# Ensure Python dependencies are installed globally
-COPY --from=build /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
-COPY --from=build /usr/local/bin /usr/local/bin
+COPY --from=build /venv /venv
 
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
@@ -57,4 +55,4 @@ USER 1000:1000
 
 EXPOSE ${PORT:-3000}
 
-CMD ["/bin/sh", "-c", "python3 --version && exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
+CMD ["/bin/sh", "-c", "/venv/bin/python3 --version && exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
