@@ -55,4 +55,4 @@ USER 1000:1000
 
 EXPOSE ${PORT:-3000}
 
-CMD ["/bin/sh", "-c", "/venv/bin/python3 --version && exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
+CMD ["/bin/sh", "-c", "/venv/bin/python3 -m ensurepip && exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
