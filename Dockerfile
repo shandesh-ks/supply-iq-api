@@ -11,9 +11,8 @@ WORKDIR /rails
 # Install system dependencies for Ruby, Python, and ML libraries
 RUN apt-get update -qq && apt-get install --no-install-recommends -y \
     curl libjemalloc2 libvips sqlite3 build-essential git pkg-config \
-    python-is-python3 python3 python3-pip python3-venv \
+    python3 python3-pip python3-venv \
     && rm -rf /var/lib/apt/lists/*
-
 
 # Set environment variables for Rails
 ENV RAILS_ENV="production" \
@@ -37,16 +36,18 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile && \
     bundle exec rails db:migrate
 
 # Install Python dependencies
-COPY requirements.txt .
-RUN python3 -m venv /venv && \
-    /venv/bin/pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /app/requirements.txt
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
 
 # Final production image
 FROM base
 
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
-COPY --from=build /venv /venv
+
+# Ensure Python dependencies are installed globally
+COPY --from=build /usr/local/lib/python3.9/site-packages /usr/local/lib/python3.9/site-packages
+COPY --from=build /usr/local/bin /usr/local/bin
 
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
@@ -56,4 +57,4 @@ USER 1000:1000
 
 EXPOSE ${PORT:-3000}
 
-CMD ["/bin/sh", "-c", "/venv/bin/python3 --version && exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
+CMD ["/bin/sh", "-c", "python3 --version && exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
