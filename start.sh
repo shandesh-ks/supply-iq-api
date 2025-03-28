@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Ensure Python is installed
+# Ensure Python is installedhttps://github.com/shandesh-ks/supply-iq-api/blob/main/start.sh
 if ! command -v python3 &> /dev/null
 then
     echo "Python3 not found. Installing..."
