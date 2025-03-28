@@ -9,12 +9,11 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 WORKDIR /rails
 
 # Install system dependencies for Ruby, Python, and ML libraries
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-    curl libjemalloc2 libvips sqlite3 \
-    build-essential git pkg-config \
-    python${PYTHON_VERSION} python3-pip python3-venv && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install --no-install-recommends -y \
+    curl libjemalloc2 libvips sqlite3 build-essential git pkg-config \
+    python-is-python3 python3 python3-pip python3-venv \
+    && rm -rf /var/lib/apt/lists/*
+
 
 # Set environment variables for Rails
 ENV RAILS_ENV="production" \
