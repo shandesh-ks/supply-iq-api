@@ -58,7 +58,7 @@ RUN groupadd --system --gid 1000 rails && \
 USER 1000:1000
 
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["sh", "-c", "export PATH=/venv/bin:$PATH && bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
 
 #EXPOSE ${PORT:-3000}
 
