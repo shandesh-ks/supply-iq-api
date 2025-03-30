@@ -52,10 +52,13 @@ class IndustrialsController < ApplicationController
 
   def run_python_script(file_path, output_dir)
     script_path = Rails.root.join('lib', 'scripts', 'data_processing.py').to_s
-    python_env = "python3"  # Use system Python directly
+    # python_env = "python3"  # Use system Python directly
     # python_env = "/venv/bin/python3"
+    # python_env = Rails.root.join("venv/bin/python3").to_s
+    python_env = Rails.root.join('venv', 'bin', 'python3').to_s
 
-    output, error, status = Open3.capture3("#{python_env} #{script_path} #{file_path} #{output_dir}")
+    output, error, status = Open3.capture3(python_env, script_path, file_path.to_s, output_dir.to_s)
+    # output, error, status = Open3.capture3("#{python_env} #{script_path} #{file_path} #{output_dir}")
 
     if status.success?
       begin
