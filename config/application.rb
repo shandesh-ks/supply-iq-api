@@ -57,13 +57,8 @@ module SupplyIqApi
     # #### #
     config.autoload_paths << "#{Rails.root}/lib/swagger"
     config.autoload_paths << Rails.root.join('lib')
-    config.eager_load_paths += %W(
-      #{Rails.root}/lib
-      #{Rails.root}/lib/swagger
-      #{Rails.root}/lib/swagger/docs
-      #{Rails.root}/lib/swagger/schemas
-      #{Rails.root}/app/controllers/concerns/activity_feed/
-    )
+    config.eager_load = false
+
 
     # config.active_job.queue_adapter = :delayed
     # config.action_controller.raise_on_open_redirects = false
