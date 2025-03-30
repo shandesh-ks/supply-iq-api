@@ -60,9 +60,9 @@ USER 1000:1000
 EXPOSE ${PORT:-3000}
 
 # ✅ Final CMD: Ensure Python is available and start Rails server
-#CMD ["./bin/rails", "server"]
+CMD ["./bin/rails", "server"]
 #CMD ["bash", "-c", "/venv/bin/python3 --version && bundle exec rails server -b 0.0.0.0 -p $PORT"]
-CMD ["sh", "-c", "bundle exec rails server -b 0.0.0.0 -p $PORT"]
+#CMD ["sh", "-c", "bundle exec rails server -b 0.0.0.0 -p $PORT"]
 #CMD ["exec bundle exec rails server -b 0.0.0.0 -p ${PORT:-3000}"]
 
 # syntax = docker/dockerfile:1
