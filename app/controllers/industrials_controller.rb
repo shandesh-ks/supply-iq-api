@@ -58,7 +58,7 @@ class IndustrialsController < ApplicationController
     python_env = Rails.root.join('venv', 'bin', 'python3').to_s
 
     # Run the Python script with arguments
-    output, error, status = Open3.capture3(python_env, script_path, file_path.to_s, output_dir.to_s)
+    # output, error, status = Open3.capture3(python_env, script_path, file_path.to_s, output_dir.to_s)
 
     command = "source #{Rails.root.join('venv/bin/activate')} && python #{script_path}"
     output, error, status = Open3.capture3("/bin/bash", "-c", command)
