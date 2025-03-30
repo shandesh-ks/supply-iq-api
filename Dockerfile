@@ -58,7 +58,8 @@ RUN groupadd --system --gid 1000 rails && \
 USER 1000:1000
 
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+#CMD ["./bin/rails", "server"]
+CMD ["bash", "-c", "/venv/bin/python3 --version && bundle exec rails server -b 0.0.0.0 -p $PORT"]
 #EXPOSE ${PORT:-3000}
 
 # ✅ Final CMD: Ensure Python is available and start Rails server
