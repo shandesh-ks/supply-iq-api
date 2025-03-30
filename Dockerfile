@@ -57,7 +57,7 @@ RUN groupadd --system --gid 1000 rails && \
 
 USER 1000:1000
 
-EXPOSE ${PORT:-3000}
+#EXPOSE ${PORT:-3000}
 
 # ✅ Final CMD: Ensure Python is available and start Rails server
 #CMD ["./bin/rails", "server"]
